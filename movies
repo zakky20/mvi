@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Define the directory containing your movies
+MOVIE_DIR="$HOME/mov"
+
+# Find all movie files, strip the path, and let dmenu choose
+MOVIE=$(find "$MOVIE_DIR" -type f \( -iname "*.mp4" -o -iname "*.mkv" -o -iname "*.avi" \) \
+    | sed "s|.*/||" \
+    | dmenu -i -p "Select a movie:")
+
+# If a movie was selected, play it with mpv by reconstructing the full path
+[ -n "$MOVIE" ] && mpv "$MOVIE_DIR/$MOVIE"
